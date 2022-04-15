@@ -1,0 +1,24 @@
+{
+    "name": "riculum/php-auth",
+    "description": "A complete user authentication library written in PHP",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Riculum",
+            "email": "riculum@outlook.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Auth\\" : "./"
+        }
+    },
+    "require": {
+        "vlucas/phpdotenv": "^5.3",
+        "riculum/php-pdo": "^1.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9"
+    }
+}
