@@ -105,7 +105,7 @@ class User
      */
     static function getUsers(): ?array
     {
-        return DB::single('SELECT * FROM ' . $_ENV['DB_PREFIX'] . 'user', []);
+        return DB::select('SELECT * FROM ' . $_ENV['DB_PREFIX'] . 'user', []);
     }
 
     /**
