@@ -21,11 +21,11 @@ class Session {
     }
 
     /**
-     * @return int|null
+     * @return string|null
      */
-    static function getUserId(): ?int
+    public static function getUserUUID(): ?string
     {
-        return $_SESSION['userId'] ?? null;
+        return $_SESSION['userUUID'] ?? null;
     }
 
     /**
@@ -36,9 +36,8 @@ class Session {
         $_SESSION['userToken'] = $token;
     }
 
-
-    static function setUserId(int $id)
+    static function setUserUUID(int $uuid)
     {
-        $_SESSION['userId'] = $id;
+        $_SESSION['userUUID'] = $uuid;
     }
 }

@@ -49,7 +49,7 @@ class Authentication
 
     static function logout()
     {
-        if (!empty(Session::getUserId())) {
+        if (!empty(Session::getUserUUID())) {
             User::logout();
         }
     }
@@ -57,13 +57,13 @@ class Authentication
     static function verify(): bool
     {
         $sessionToken = Session::getUserToken();
-        $sessionUserId = Session::getUserId();
+        $sessionUserUUID = Session::getUserUUID();
 
-        if (empty($sessionUserId) || empty($sessionToken)) {
+        if (empty($sessionUserUUID) || empty($sessionToken)) {
             return false;
         }
 
-        $userToken = User::getUser($sessionUserId)['token'];
+        $userToken = User::getUser($sessionUserUUID)['token'];
 
         if (empty($userToken)) {
             return false;

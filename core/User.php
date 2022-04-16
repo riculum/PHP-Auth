@@ -36,7 +36,7 @@ class User
     /**
      * Login current user and set variables
      */
-    static function login(int $id)
+    static function login(string $uuid)
     {
         $token = md5(uniqid(rand(), true));
 
@@ -46,9 +46,9 @@ class User
             "online" => 1
         ];
 
-        self::setUser($id, $user);
+        self::setUser($uuid, $user);
 
-        Session::setUserId($id);
+        Session::setUserUUID($uuid);
         Session::setUserToken($token);
     }
 
@@ -61,7 +61,7 @@ class User
             "token" => md5(uniqid(rand(), true)),
             "online" => 0
         ];
-        self::setUser(Session::getUserId(), $user);
+        self::setUser(Session::getUserUUID(), $user);
 
         Session::destroySession();
     }
@@ -82,18 +82,22 @@ class User
         }
     }
 
-    static function deleteUser(int $id)
+    /**
+     * @param string $uuid
+     * @return void
+     */
+    static function deleteUser(string $uuid)
     {
-        DB::delete("DELETE FROM " . $_ENV['DB_PREFIX'] . "user WHERE id = ?", [$id]);
+        DB::delete("DELETE FROM " . $_ENV['DB_PREFIX'] . "user WHERE uuid = ?", [$uuid]);
     }
 
     /**
-     * @param int $id
+     * @param int $uuid
      * @return array|null
      */
-    static function getUser(int $id): ?array
+    static function getUser(string $uuid): ?array
     {
-        return DB::single('SELECT * FROM ' . $_ENV['DB_PREFIX'] . 'user WHERE id = ?', [$id]);
+        return DB::single('SELECT * FROM ' . $_ENV['DB_PREFIX'] . 'user WHERE uuid = ?', [$uuid]);
     }
 
     static function getUserByEmail(string $email): ?array
@@ -102,16 +106,16 @@ class User
     }
 
     /**
-     * @param int $id
+     * @param string $uuid
      * @param array $user
      * @return void
      */
-    static function setUser(int $id, array $user)
+    static function setUser(string $uuid, array $user)
     {
         $condition = [
-            "key" => "id",
+            "key" => "uuid",
             "operator" => "=",
-            "value" => $id
+            "value" => $uuid
         ];
 
         DB::updateAssoc($_ENV['DB_PREFIX'].'user', $user, $condition);
