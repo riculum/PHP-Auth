@@ -92,7 +92,7 @@ class User
     }
 
     /**
-     * @param int $uuid
+     * @param string $uuid
      * @return array|null
      */
     static function getUser(string $uuid): ?array
@@ -100,6 +100,18 @@ class User
         return DB::single('SELECT * FROM ' . $_ENV['DB_PREFIX'] . 'user WHERE uuid = ?', [$uuid]);
     }
 
+    /**
+     * @return array|null
+     */
+    static function getUsers(): ?array
+    {
+        return DB::single('SELECT * FROM ' . $_ENV['DB_PREFIX'] . 'user', []);
+    }
+
+    /**
+     * @param string $email
+     * @return array|null
+     */
     static function getUserByEmail(string $email): ?array
     {
         return DB::single('SELECT * FROM ' . $_ENV['DB_PREFIX'] . 'user WHERE email = ?', [$email]);
