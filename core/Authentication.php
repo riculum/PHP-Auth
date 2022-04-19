@@ -34,13 +34,13 @@ class Authentication
         }
 
         if (password_verify($password, $currentUser['password']) && $currentUser['attempts'] < self::MAX_LOGIN_ATTEMPTS && $currentUser['enabled'] == 1) {
-            User::login($currentUser['id']);
+            User::login($currentUser['uuid']);
         } else if ($currentUser['enabled'] != 1) {
             throw new UserNotEnabledException('User account has been deactivated');
         } else if ($currentUser['attempts'] >= self::MAX_LOGIN_ATTEMPTS) {
             throw new TooManyAttemptsException('Too many failed login attempts');
         } else {
-            User::setUser($currentUser['id'], ['attempts' => $currentUser['attempts'] + 1]);
+            User::setUser($currentUser['uuid'], ['attempts' => $currentUser['attempts'] + 1]);
             throw new InvalidPasswordException('Incorrect Password');
         }
 
