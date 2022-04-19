@@ -63,7 +63,7 @@ class Authentication
             return false;
         }
 
-        $userToken = User::getUser($sessionUserUUID)['token'];
+        $userToken = User::getUser($sessionUserUUID)['token'] ?? null;
 
         if (empty($userToken)) {
             return false;
