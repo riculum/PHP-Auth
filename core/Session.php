@@ -36,7 +36,7 @@ class Session {
         $_SESSION['userToken'] = $token;
     }
 
-    static function setUserUUID(int $uuid)
+    static function setUserUUID(string $uuid)
     {
         $_SESSION['userUUID'] = $uuid;
     }

@@ -1,4 +1,5 @@
 .idea/
 /config/.env
 /vendor
+/tests/
 composer.lock
