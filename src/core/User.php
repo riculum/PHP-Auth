@@ -1,9 +1,9 @@
 <?php
-namespace Auth\Core;
+namespace Riculum\Auth\core;
 
-use Auth\Exceptions\UserAlreadyExistsException;
-use Database\Core\Database as DB;
 use Exception;
+use Riculum\Auth\exceptions\UserAlreadyExistsException;
+use Riculum\Database as DB;
 
 class User
 {
@@ -18,7 +18,7 @@ class User
     }
 
     /**
-     * Output the 36 character UUID
+     * Output the 36 character UUIDv4
      * @throws Exception
      */
     private static function generateUuid(): string
@@ -76,19 +76,11 @@ class User
     {
         if (self::emailIsUnique($user['email'])) {
             $user['uuid'] = self::generateUuid();
+            $user['resetToken'] = bin2hex(random_bytes(16));
             return DB::insertAssoc($_ENV['DB_PREFIX'].'user', $user);
         } else {
             throw new UserAlreadyExistsException('User with email ' . $user['email'] . ' already exists');
         }
-    }
-
-    /**
-     * @param string $uuid
-     * @return void
-     */
-    static function deleteUser(string $uuid)
-    {
-        DB::delete("DELETE FROM " . $_ENV['DB_PREFIX'] . "user WHERE uuid = ?", [$uuid]);
     }
 
     /**
@@ -98,14 +90,6 @@ class User
     static function getUser(string $uuid): ?array
     {
         return DB::single('SELECT * FROM ' . $_ENV['DB_PREFIX'] . 'user WHERE uuid = ?', [$uuid]);
-    }
-
-    /**
-     * @return array|null
-     */
-    static function getUsers(): ?array
-    {
-        return DB::select('SELECT * FROM ' . $_ENV['DB_PREFIX'] . 'user', []);
     }
 
     /**

@@ -1,11 +1,13 @@
 <?php
-namespace Auth\Core;
+namespace Riculum\Auth;
 
-use Auth\Exceptions\InvalidEmailException;
-use Auth\Exceptions\InvalidPasswordException;
-use Auth\Exceptions\TooManyAttemptsException;
-use Auth\Exceptions\UserAlreadyExistsException;
-use Auth\Exceptions\UserNotEnabledException;
+use Riculum\Auth\core\Session;
+use Riculum\Auth\core\User;
+use Riculum\Auth\exceptions\InvalidEmailException;
+use Riculum\Auth\exceptions\InvalidPasswordException;
+use Riculum\Auth\exceptions\TooManyAttemptsException;
+use Riculum\Auth\exceptions\UserAlreadyExistsException;
+use Riculum\Auth\exceptions\UserNotEnabledException;
 
 class Authentication
 {
@@ -47,11 +49,13 @@ class Authentication
         return true;
     }
 
-    static function logout()
+    static function logout(): bool
     {
         if (!empty(Session::getUserUUID())) {
             User::logout();
         }
+
+        return true;
     }
 
     static function verify(): bool

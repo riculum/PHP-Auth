@@ -1,5 +1,5 @@
 <?php
-namespace Auth\Core;
+namespace Riculum\Auth\core;
 
 if (session_status() == PHP_SESSION_NONE) {
     session_start();

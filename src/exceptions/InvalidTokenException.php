@@ -1,4 +1,4 @@
 <?php
-namespace Auth\Exceptions;
+namespace Riculum\Auth\exceptions;
 
 class InvalidTokenException extends \Exception {}
